@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="sqlWriterStyle.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1><img id="logo" src="images/SQLWriterLogo2.jpg">SQL Writer</h1>
+			<div id="RGBline"></div>
+		</header>
+
+		<br><br><br><br><br><br>
+
+		<h2 id="introTitle" >Get Started Using SQL Writer!</h2>
+
+		<!-- Trigger/Open The Modal -->
+		<button id="myBtn">Create New Project</button>
+
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<h2>Create New Project</h2>
+				</div>
+				<div class="modal-body">
+					<p>Select a language for your project</p>
+					<select id="language">
+						<option value="0">Select a Language</option>
+						<option value="1">SQL</option>
+						<option value="2">mySQL</option>
+					</select>
+					<button onclick="getElementById('languageSelect').innerHTML=languageFunction(); nameFunction(); scriptButton(); hideIntro()">Ok</button>
+				</div>
+				<div><br><br></div>
+				<div class="modal-footer"><h3></h3></div>
+			</div>
+		</div>
+		<div><br></div>
+		<!-- Place holder for displaying users language selection -->
+		<p id="languageSelect"></p>
+
+		<!-- The tab functionality -->
+		<div class="tab">
+			<button class="tablinks" id="dbbutton" disabled onclick="openCRUD(event, 'Database')">Database</button>
+			<button class="tablinks" id="tablebutton" disabled onclick="openCRUD(event, 'Table')">Table</button>
+			<button class="tablinks" id="databutton" disabled onclick="openCRUD(event, 'InsertData')">Insert Data</button>
+		</div>
+
+		<!-- DATABASE CREATION TAB -->
+		<div id="Database" class="tabcontent">
+			<h3>Database</h3>
+			<p id="newDatabase"></p>
+			<div style="padding-left: 40px;">
+			<div class="speech-bubble">
+			<div class="arrow bottom right"></div>
+			Select the Table tab
+			</div>
+			</div>
+			<img id="bounce" title="Mr. Bear" src="images/prancing_bear.gif">
+		  </div>
+
+		<!-- TABLE CREATION TAB -->
+		<div id="Table" class="tabcontent">
+			<!-- <h3>Table</h3> -->
+			<p>Let's create a table now</p>
+			<button onclick="tableButton()">Create Table</button>
+
+			<div id ="nameTable" class="tablename">
+				<p><strong>Enter a name for your table</strong></p>
+				<p>
+					<!-- placeholder="Enter Table Name" -->
+					<input type="text" name="tablename" id="tn" value="aTable">
+					<button id="new-column-button" onclick="makeTable(tn.value)">Ok</button>
+				</p>
+				<p id="newP"><b>Now let's add some columns to your table</b></p>
+				<div style="width: 600px; display: table-cell;">
+					<table id="newColumn" class="columnname">
+						<tr>
+							<td id="tablecolumn-names">Attribute Title</td>
+							<td id="tablecolumn-names">Type</td>
+							<td id="tablecolumn-names">Size</td>
+							<td id="tablecolumn-names">Null</td>
+							<td id="tablecolumn-names">Unique</td>
+							<td id="tablecolumn-names"></td>
+							<td id="tablecolumn-names"></td>
+						</tr>
+						<tr id="tablerow0">
+
+							<!-- TITLE COLUMN -->
+							<td id="tablecolumn-names">
+								<input id="title-column0" type="text" name="acolumn" placeholder="column name">
+							</td>
+
+							<!-- TYPE COLUMN -->
+							<td id="tablecolumn-names">
+								<select id="type-column0" name="type">
+									<option value="0">Select a data type</option>
+									<option value="varchar">varchar</option>
+									<option value="integer">integer</option>
+									<option value="decimal">decimal</option>
+									<option value="datetime">datetime</option>
+									<option value="char">char</option>
+								</select>
+							</td>
+
+							<!-- SIZE COLUMN -->
+                            <td id="tablecolumn-names">
+                                <input id="size-column0" type="number" name="size" placeholder="column size">
+                            </td>
+
+							<!-- NULL COLUMN -->
+							<td id="tablecolumn-names">
+								<input id="null-column0" type ="checkbox" name="null" value="null">
+							</td>
+
+							<!-- UNIQUE COLUMN -->
+							<td id="tablecolumn-names">
+								<input id="unique-column0" type ="checkbox" name="unique" value="unique">
+							</td>
+
+							<!-- REMOVE ROW COLUMN -->
+							<td id="tablecolumn-names">
+								<a href="#" title="" id="remove-column0" class="remove-column">Remove</a>
+							</td>
+
+							<!-- SAVE ATTRIBUTE COLUMN -->
+							<td id="tablecolumn-names">
+								<a href="#" name="0" id="save-column0" class="save-column" onclick="saveAttribute(this.name)">SAVE</a>
+							</td>
+						</tr>
+					</table>
+					<div style="padding-top: 10px;">
+					<button title="" id="add-col" class="add-column">+</button>
+					<div style="text-align: right;">
+					<button id="save-table" onclick="saveTable(); displayInsert()">Save Table</button>
+					</div>
+					</div>
+				</div>
+
+				<!-- TOOL-TIP / INFORMATION -->
+				<div style="display: table-cell; padding-left: 50px;">
+					<div style="padding-left: 45px">
+						<div id="question" class="speech-bubble">
+								<div class="arrow bottom right"></div>
+								Click me for additional information on creating tables
+								</div>
+								</div>
+					<p id="bounce-image">
+						<a href="https://www.w3schools.com/sql/sql_create_table.asp" target="_blank"><img id="bounce" title="help" src="images/prancing_bear.gif"></a>
+					</p>
+				</div>
+				</div>
+			</div>
+
+		<!-- DATA INSERTION TAB -->
+		<div id="InsertData" class="tabcontent">
+			<div style="width: 600px; display: table-cell;">
+				<table>
+					<tr>
+						<td>Insert Data Into Your Table</td>
+						<!-- TOOLTIP -->
+						<td valign=top align=right style="padding-left: 150px">
+						<a href="https://www.w3schools.com/sql/sql_insert.asp" target="_blank"><img id="bounce" title="help" src="images/prancing_bear.gif"></a>
+						</td>
+						<td valign=top align=left>
+								<div class="speech-bubble">
+								<div class="arrow left"></div>
+									I can help
+								</div>
+					</td>
+					</tr>
+				</table>
+			</div>
+			<!-- Place holder table for displaying table name and column name along with fields from Table Tab -->
+			<div id="insertDisplay">
+				<h3 id="existing_table"></h3>
+				<table id="insertDataTables" class="addAttributeTable0">
+				</table>
+				<div style="padding-top: 10px;">
+				<button title="" id="add-data-id" class="add-data">+</button>
+				</div>
+					<div style="display: table-cell;">
+						<table id="insertDataTables" class="addAttributeTable">
+						</table>
+					</div>
+			</div>
+		</div>
+
+		<!--Buttons for toggle display of viewing script and clearing data/refreshing page-->
+		<p id="displayButton" style="display: none">
+			<button onclick="changeButton(this);getElementById('displayScript').innerHTML=scriptView()">View Script</button>
+			<button onclick="clearFunction()">Clear All</button>
+		</p>
+
+		<!-- Place holder for displaying script -->
+		<p id="clearMe"></p>
+		<p id="scriptDisplay"></p>
+
+
+		<script>
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		</script>
+		<script src="sqlWriter.js"></script>
+		<script src="table.js"></script>
+		<script src="insert.js"></script>
+		<script src="scriptGenerator.js"></script>
+		<script src="languages.js"></script>
+
+<!--Footer -->
+	<div style="position: relative; width: 100%; padding: 30px 0px 0px 0px">
+		<p id="aboutus" style="position:fixed; width:100%; text-align: center; bottom: 5px;">
+		Computer Science Capstone Produced by:<br>Ricca Brunolli | Bryan Martin | Nir Ladecky<br>
+		<a href="files/AboutUs.html" target="_blank">Meet the Team</a> - <button id="english" title="EN" onclick="swapLang(this.title)">EN</button>|<button id="french" title="FR" onclick="swapLang(this.title)">FR</button></p>-</p>
+	</div>
+	</body>
+</html>
+
+
